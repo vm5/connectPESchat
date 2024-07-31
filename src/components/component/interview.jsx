@@ -11,6 +11,7 @@ export default function ConnectPESChatbot() {
   const [formData, setFormData] = useState({
     name: '',
     srn: '',
+    idCard: null,
     role: '',
     company: '',
     contactMethod: ''
@@ -47,7 +48,7 @@ export default function ConnectPESChatbot() {
       .then((response) => {
         console.log('Email sent successfully:', response);
         setStep(2);
-        setMessage('Your information was submitted and someone will connect with you shortly.');
+        setMessage('Your answer has reached the concerned person. Thank you for taking some time out to answer the query!');
       })
       .catch((error) => {
         console.error('Email sending failed:', error);
@@ -56,42 +57,36 @@ export default function ConnectPESChatbot() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center py-4 px-2">
-      <div className="flex flex-col md:flex-row w-full max-w-4xl bg-white rounded-lg shadow-lg overflow-hidden">
-        <div className="hidden md:flex flex-col w-full md:w-64 p-4 bg-gradient-to-r from-orange-400 via-red-500 to-yellow-500 text-white">
-          <Button variant="ghost" className="flex items-center gap-2 px-2 text-left">
-            <div className="flex items-center justify-center rounded-full w-8 h-8 bg-gray-200">
-              <BotIcon className="w-5 h-5 text-blue-600" />
+    <div className="min-h-screen w-full bg-gray-100">
+      <div className="grid md:grid-cols-[260px_1fr] min-h-screen w-full bg-gradient-to-r from-orange-400 via-blue-500 to-blue-700 text-gray-800">
+        <div className="hidden md:flex flex-col side-component shadow-lg p-4 rounded-lg">
+          <Button variant="ghost" className="justify-start w-full gap-2 px-2 text-left">
+            <div className="flex items-center justify-center rounded-full w-7 h-7 bg-gray-200">
+              <BotIcon className="w-4 h-4 text-blue-600" />
             </div>
-            <div className="text-sm text-gray-700">ConnectPES</div>
+            <div className="overflow-hidden text-sm grow text-ellipsis whitespace-nowrap text-gray-700">ConnectPES</div>
+         
           </Button>
-          <div className="mt-4">
-            <p className="text-gray-100">Welcome to ConnectPES! This form helps you connect with PES Alumni for obtaining suitable information about the organization you are thinking of applying for. Please enter the following details:</p>
+          <div className="mt-4 text-gray-600">
+            <p>Dear Alumni, Welcome to ConnectPES! If you are here to answer a query please fill in the following details so that query can be answered:</p>
           </div>
         </div>
-        <div className="flex-1 p-4 md:p-6 lg:p-8">
+        <div className="flex flex-col items-start flex-1 p-6 max-w-2xl mx-auto bg-white shadow-lg rounded-lg">
           {step === 1 ? (
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
                 <label className="block text-sm font-medium text-gray-700">Your Full Name:</label>
-                <Textarea name="name" value={formData.name} onChange={handleChange} required className="mt-1 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full" />
+                <Textarea name="name" value={formData.name} onChange={handleChange} required className="mt-1 p-3 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Your SRN:</label>
-                <Textarea name="srn" value={formData.srn} onChange={handleChange} required className="mt-1 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full" />
+                <label className="block text-sm font-medium text-gray-700">Name of the person you are answering to:</label>
+                <Textarea name="srn" value={formData.srn} onChange={handleChange} required className="mt-1 p-3 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">The role you are interviewing for:</label>
-                <Textarea name="role" value={formData.role} onChange={handleChange} required className="mt-1 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full" />
+                <label className="block text-sm font-medium text-gray-700">Your answer:</label>
+                <Textarea name="role" value={formData.role} onChange={handleChange} required className="mt-1 p-3 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">The company you are applying for:</label>
-                <Textarea name="company" value={formData.company} onChange={handleChange} required className="mt-1 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Your preferred contact method:</label>
-                <Textarea name="contactMethod" value={formData.contactMethod} onChange={handleChange} required className="mt-1 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full" />
-              </div>
+            
               <Button type="submit" className="w-full mt-4 bg-blue-600 text-white hover:bg-blue-700">Submit</Button>
             </form>
           ) : (
@@ -114,6 +109,14 @@ function BotIcon(props) {
       <path d="M20 14h2" />
       <path d="M15 13v2" />
       <path d="M9 13v2" />
+    </svg>
+  );
+}
+
+function PenIcon(props) {
+  return (
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
     </svg>
   );
 }
