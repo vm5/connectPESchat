@@ -5,107 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import emailjs from 'emailjs-com'; // Import EmailJS
 import './styles.css'; // Import the CSS file
-import styled from 'styled-components';
-
-const Container = styled.div`
-  min-height: 100vh;
-  width: 100%;
-  background-color: #f0f4f8;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-const MainContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  background: white;
-  border-radius: 0.75rem;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  @media (min-width: 768px) {
-    flex-direction: row;
-  }
-`;
-
-const SideComponent = styled.div`
-  display: none;
-  @media (min-width: 768px) {
-    display: flex;
-    flex-direction: column;
-    width: 260px;
-    padding: 1rem;
-    background: linear-gradient(to right, #ff7e5f, #feb47b);
-    color: white;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
-  }
-`;
-
-const FormContainer = styled.div`
-  flex: 1;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  @media (min-width: 768px) {
-    padding: 3rem;
-  }
-`;
-
-const Heading = styled.h1`
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #333;
-  text-align: center;
-  @media (min-width: 768px) {
-    font-size: 2rem;
-  }
-`;
-
-const TextareaStyled = styled(Textarea)`
-  margin-top: 0.5rem;
-  padding: 0.75rem;
-  border-radius: 0.375rem;
-  border: 1px solid #ddd;
-  width: 100%;
-  max-width: 500px;
-  font-size: 1rem;
-  @media (min-width: 768px) {
-    font-size: 1.125rem;
-  }
-`;
-
-const SubmitButton = styled(Button)`
-  width: 100%;
-  margin-top: 1rem;
-  background-color: #007bff;
-  color: white;
-  font-size: 1rem;
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
-
-const Message = styled.p`
-  font-size: 1rem;
-  color: #333;
-  text-align: center;
-  @media (min-width: 768px) {
-    font-size: 1.125rem;
-  }
-`;
 
 export default function ConnectPESChatbot() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: '',
     srn: '',
-    idCard: null,
     role: '',
     company: '',
     contactMethod: ''
@@ -151,48 +56,52 @@ export default function ConnectPESChatbot() {
   };
 
   return (
-    <Container>
-      <MainContent>
-        <SideComponent>
-          <Button variant="ghost" className="justify-start w-full gap-2 px-2 text-left">
-            <div className="flex items-center justify-center rounded-full w-7 h-7 bg-gray-200">
-              <BotIcon className="w-4 h-4 text-blue-600" />
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center py-4 px-2">
+      <div className="flex flex-col md:flex-row w-full max-w-4xl bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="hidden md:flex flex-col w-full md:w-64 p-4 bg-gradient-to-r from-orange-400 via-red-500 to-yellow-500 text-white">
+          <Button variant="ghost" className="flex items-center gap-2 px-2 text-left">
+            <div className="flex items-center justify-center rounded-full w-8 h-8 bg-gray-200">
+              <BotIcon className="w-5 h-5 text-blue-600" />
             </div>
-            <div className="overflow-hidden text-sm grow text-ellipsis whitespace-nowrap text-gray-700">ConnectPES</div>
+            <div className="text-sm text-gray-700">ConnectPES</div>
           </Button>
-          <div className="mt-4 text-gray-600">
-            <p>Welcome to ConnectPES! This form helps you connect with PES Alumni for obtaining suitable information about the organization you are thinking of applying for. Please enter the following details:</p>
+          <div className="mt-4">
+            <p className="text-gray-100">Welcome to ConnectPES! This form helps you connect with PES Alumni for obtaining suitable information about the organization you are thinking of applying for. Please enter the following details:</p>
           </div>
-        </SideComponent>
-        <FormContainer>
+        </div>
+        <div className="flex-1 p-4 md:p-6 lg:p-8">
           {step === 1 ? (
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
                 <label className="block text-sm font-medium text-gray-700">Your Full Name:</label>
-                <TextareaStyled name="name" value={formData.name} onChange={handleChange} required />
+                <Textarea name="name" value={formData.name} onChange={handleChange} required className="mt-1 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">Your SRN:</label>
-                <TextareaStyled name="srn" value={formData.srn} onChange={handleChange} required />
+                <Textarea name="srn" value={formData.srn} onChange={handleChange} required className="mt-1 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">The organization you want to know more about. Please specify what kind of information do you want to know as well:</label>
-                <TextareaStyled name="company" value={formData.company} onChange={handleChange} required />
+                <label className="block text-sm font-medium text-gray-700">The role you are interviewing for:</label>
+                <Textarea name="role" value={formData.role} onChange={handleChange} required className="mt-1 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Your preferred contact method (if email then specify your email, if phone then specify your number of if you wish to be connected via another method then specify the same along with the details):</label>
-                <TextareaStyled name="contactMethod" value={formData.contactMethod} onChange={handleChange} required />
+                <label className="block text-sm font-medium text-gray-700">The company you are applying for:</label>
+                <Textarea name="company" value={formData.company} onChange={handleChange} required className="mt-1 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full" />
               </div>
-              <SubmitButton type="submit">Submit</SubmitButton>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Your preferred contact method:</label>
+                <Textarea name="contactMethod" value={formData.contactMethod} onChange={handleChange} required className="mt-1 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full" />
+              </div>
+              <Button type="submit" className="w-full mt-4 bg-blue-600 text-white hover:bg-blue-700">Submit</Button>
             </form>
           ) : (
             <div className="text-center">
-              <Message>{message}</Message>
+              <p className="text-lg text-gray-800">{message}</p>
             </div>
           )}
-        </FormContainer>
-      </MainContent>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
 }
 
